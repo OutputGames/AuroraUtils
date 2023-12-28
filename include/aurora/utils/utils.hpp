@@ -27,6 +27,10 @@
 #include <glm/gtc/type_ptr.hpp>
 #include <array>
 
+#include "json.hpp"
+
+using namespace nlohmann;
+
 #include "SDL.h"
 
 using namespace glm;
@@ -75,6 +79,10 @@ typedef int64_t s64;
 #define RAD2DEG (180.0f/PI)
 #endif
 
+#ifndef JSON_INDENT_AMOUNT
+#define JSON_INDENT_AMOUNT 2
+#endif
+
 template <typename T>
 
 struct Ref
@@ -90,7 +98,7 @@ struct Ref
 
 	Ref(T* t)
 	{
-		ptr = std::make_shared<T>(t);
+		ptr = std::make_shared<T>(*t);
 	}
 
 	Ref(std::shared_ptr<T> t)
@@ -163,6 +171,48 @@ struct SDLUtils
 		}
 	}
 };
+
+struct uvector
+{
+	// Function to print the 
+	// index of an element
+	template <typename T>
+	static int GetIndexOfElement(std::vector<T> v, T K)
+	{
+		auto it = std::find(v.begin(), v.end(), K);
+
+		// If element was found 
+		if (it != v.end())
+		{
+
+			// calculating the index 
+			// of K 
+			int index = it - v.begin();
+			return index;
+		}
+		else {
+			return -1;
+		}
+	}
+
+
+	template <typename T>
+	static bool ContainsElement(std::vector<T> v, T K)
+	{
+		auto it = std::find(v.begin(), v.end(), K);
+
+		// If element was found 
+		if (it != v.end())
+		{
+
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+};
+
 
 
 #endif // UTILS_HPP

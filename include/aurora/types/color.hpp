@@ -12,6 +12,17 @@ public:
 	float r, g, b, a=1;
 
 	static Color Red;
+
+	vec4 ToVector()
+	{
+		return vec4{ r,g,b,a };
+	}
+
+	void operator=(const vec4& v) { r = v.x, g = v.y, b = v.z, a = v.w; }
+	operator vec4()
+	{
+		return ToVector();
+	}
 };
 
 

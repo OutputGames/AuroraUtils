@@ -13,3 +13,28 @@ std::string ReadString(const std::string path)
 
     return buffer.str();
 }
+
+std::string GetFileNameWithoutExt(std::string path)
+{
+	std::filesystem::path p(path);
+
+
+	return p.stem().string();
+}
+
+bool WriteString(std::string path, std::string data)
+{
+
+	std::filesystem::create_directories(std::filesystem::path(path).parent_path());
+
+	// Create and open a text file
+	std::ofstream MyFile(path);
+
+	// Write to the file
+	MyFile << data;
+
+	// Close the file
+	MyFile.close();
+
+	return true;
+}
